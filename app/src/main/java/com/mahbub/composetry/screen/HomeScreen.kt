@@ -58,6 +58,7 @@ fun HomeScreen(callBack: (msg: String) -> Unit) {
             .background(Color(0xFFF3F4F6))
             .verticalScroll(state = scrollState)
     ) {
+        topBar()
         QuickLinks()
         Routine()
         MyCourses()
@@ -65,6 +66,24 @@ fun HomeScreen(callBack: (msg: String) -> Unit) {
     }
 
 
+}
+
+@Composable
+fun topBar() {
+    Box(
+        contentAlignment = Alignment.TopStart,
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = Color(0xFF1CAB55),
+                shape = RoundedCornerShape(size = 5.dp)
+            )
+            .background(color = Color(0xFFF3FFF2), shape = RoundedCornerShape(topStart = 5.dp, topEnd = 5.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
+            .padding(start = 12.dp, top = 10.dp, end = 12.dp, bottom = 8.dp)
+    ) {
+
+    }
 }
 
 
@@ -179,7 +198,7 @@ fun Routine() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {  }
+            .clickable { }
             .background(Color.White)
             .padding(top = 16.dp, bottom = 16.dp, start = 8.dp, end = 8.dp),
         horizontalArrangement = Arrangement.Center,
@@ -217,7 +236,7 @@ fun RoutineItem(icon: Int = -1) {
             .background(Color.White)
             .padding(8.dp)
             .clip(RoundedCornerShape(size = 6.dp))
-            .clickable {  }
+            .clickable { }
     ) {
         if (icon != -1) {
             Box(
@@ -385,9 +404,9 @@ fun MyCourses() {
         )
         Spacer(modifier = Modifier.size(2.dp))
         FlowColumn(content = {
-           repeat(2){
-               MyCoursesItem()
-           }
+            repeat(2) {
+                MyCoursesItem()
+            }
         })
     }
 
@@ -410,8 +429,7 @@ fun MyCoursesItem() {
                 shape = RoundedCornerShape(size = 6.dp)
             )
             .clip(RoundedCornerShape(size = 6.dp))
-            .clickable {  }
-
+            .clickable { }
 
 
     ) {
@@ -528,7 +546,7 @@ fun AllCourses() {
             }
 
         }
-        FlowRow(modifier = Modifier.horizontalScroll(rememberScrollState()),content = {
+        FlowRow(modifier = Modifier.horizontalScroll(rememberScrollState()), content = {
             repeat(5) {
                 AllCoursesItem()
             }
