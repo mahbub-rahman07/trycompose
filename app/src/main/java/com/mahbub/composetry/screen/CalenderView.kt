@@ -1,8 +1,12 @@
 package com.mahbub.composetry.screen
 
+import android.text.TextUtils
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,20 +21,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mahbub.composetry.R
 
 @Composable
 fun CalenderView() {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.fillMaxWidth().
-            padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
 
@@ -117,7 +125,8 @@ fun CalenderView() {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp)
 
         ) {
@@ -129,17 +138,16 @@ fun CalenderView() {
 }
 
 
-
 @Composable
 fun calenderCell(model: CalenderCell) {
 
-    val cornerLeft = if(model.isStartSelection) 6.dp else 0.dp
-    val cornerEnd = if(model.isEnd) 6.dp else 0.dp
+    val cornerLeft = if (model.isStartSelection) 6.dp else 0.dp
+    val cornerEnd = if (model.isEnd) 6.dp else 0.dp
     var colorBG = model.isSelected
-    val bgColor = if (model.isLate) 0xFFFF8023 else if(model.isPresent) 0xFF038969 else 0xFFF3F4F6
+    val bgColor = if (model.isLate) 0xFFFF8023 else if (model.isPresent) 0xFF038969 else 0xFFF3F4F6
 
 
-    Column (
+    Column(
         Modifier
             .width(40.dp)
             .height(40.dp)
@@ -155,22 +163,72 @@ fun calenderCell(model: CalenderCell) {
             )
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ){
+    ) {
 
+        if (!TextUtils.isEmpty(model.summeryText)) {
             Box(
                 Modifier
                     .width(32.dp)
-                    .height(32.dp)
-                    .background(color = Color(bgColor), shape = RoundedCornerShape(size = 7.dp))
+                    .height(38.dp)
+                    .background(
+                        color = Color(bgColor),
+                        shape = RoundedCornerShape(
+                            topStart = 7.dp,
+                            topEnd = 7.dp,
+                            bottomStart = 7.dp,
+                            bottomEnd = 7.dp
+                        )
+                    )
             ) {
+                BoxWithConstraints(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .border(
+                            width = 1.dp,
+                            color = Color(0xFFFFFFFF),
+                            shape = RoundedCornerShape(size = 33.dp)
+                        )
+                        .height(12.dp)
+                        .background(
+                            color = Color(0xFF7E3E10),
+                            shape = RoundedCornerShape(size = 33.dp)
+                        )
+                        .padding(start = 3.dp, top = 2.dp, end = 3.dp, bottom = 3.dp)
+                ) {
 
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_my_courses),
+                            contentDescription = "image description",
+                            contentScale = ContentScale.Inside,
+
+                            )
+                        Text(
+                            text = "2/4",
+                            style = TextStyle(
+                                fontSize = 6.sp,
+                                lineHeight = 14.sp,
+                                //fontFamily = FontFamily(Font(R.font.inter)),
+                                fontWeight = FontWeight(700),
+                                color = Color(0xFFFFFFFF),
+                            )
+                        )
+                    }
+
+
+                }
                 Text(
                     text = "${model.text}",
                     style = TextStyle(
                         fontSize = 11.sp,
 //                        fontFamily = FontFamily(Font(R.font.inter)),
                         fontWeight = FontWeight(500),
-                        color = Color(if(model.isLate || model.isPresent) 0xFFFFFFFF else 0xFF6B7280),
+                        color = Color(if (model.isLate || model.isPresent) 0xFFFFFFFF else 0xFF6B7280),
                     ),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -179,6 +237,38 @@ fun calenderCell(model: CalenderCell) {
                 )
 
             }
+
+
+        } else {
+            Box(
+                Modifier
+                    .width(32.dp)
+                    .height(36.dp)
+                    .background(
+                        color = Color(bgColor),
+                        shape = RoundedCornerShape(
+                            7.dp
+                        )
+                    )
+            ) {
+
+                Text(
+                    text = "${model.text}",
+                    style = TextStyle(
+                        fontSize = 11.sp,
+//                        fontFamily = FontFamily(Font(R.font.inter)),
+                        fontWeight = FontWeight(500),
+                        color = Color(if (model.isLate || model.isPresent) 0xFFFFFFFF else 0xFF6B7280),
+                    ),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 4.dp, bottom = 4.dp)
+                )
+
+            }
+        }
+
 
     }
 }
@@ -221,12 +311,13 @@ fun CalenderViewPreview() {
 data class CalenderCell(
     val text: String,
     val isSelected: Boolean,
-    val isLate:Boolean,
-    val summeryText:String,
-    val isStartSelection:Boolean,
-    val isEnd:Boolean = false,
-    val isPresent:Boolean = false
+    val isLate: Boolean,
+    val summeryText: String,
+    val isStartSelection: Boolean,
+    val isEnd: Boolean = false,
+    val isPresent: Boolean = false
 )
+
 val itemList = listOf(
     CalenderCell("1", false, false, "", false),
     CalenderCell("2", false, false, "", false),
@@ -235,8 +326,8 @@ val itemList = listOf(
     CalenderCell("5", true, false, "", false),
     CalenderCell("6", true, false, "", false, isPresent = true),
     CalenderCell("7", true, false, "", false, isPresent = true),
-    CalenderCell("8", true, false, "", false,isEnd = false),
-    CalenderCell("9", true, true, "", false,isEnd = true),
+    CalenderCell("8", true, false, "", false, isEnd = false),
+    CalenderCell("9", true, true, "", false, isEnd = true),
     CalenderCell("10", false, false, "", false),
     CalenderCell("11", false, false, "", false),
     CalenderCell("12", false, false, "", false),
@@ -264,4 +355,4 @@ val itemList = listOf(
     CalenderCell("3", false, false, "", false),
     CalenderCell("4", false, false, "", false),
 
-)
+    )
