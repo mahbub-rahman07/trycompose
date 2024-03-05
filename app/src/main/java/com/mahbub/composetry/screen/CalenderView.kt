@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -181,7 +182,6 @@ fun calenderCell(model: CalenderCell) {
                     )
             ) {
                 BoxWithConstraints(
-                    contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .border(
                             width = 1.dp,
@@ -197,10 +197,9 @@ fun calenderCell(model: CalenderCell) {
                 ) {
 
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        modifier = Modifier,
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround
+                        horizontalArrangement = Arrangement.End
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_my_courses),
@@ -208,15 +207,17 @@ fun calenderCell(model: CalenderCell) {
                             contentScale = ContentScale.Inside,
 
                             )
+
                         Text(
-                            text = "2/4",
+                            text = "${model.summeryText}",
                             style = TextStyle(
                                 fontSize = 6.sp,
                                 lineHeight = 14.sp,
                                 //fontFamily = FontFamily(Font(R.font.inter)),
                                 fontWeight = FontWeight(700),
                                 color = Color(0xFFFFFFFF),
-                            )
+                            ),
+                            modifier = Modifier.padding(start = 4.dp)
                         )
                     }
 
