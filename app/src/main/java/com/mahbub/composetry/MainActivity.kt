@@ -37,6 +37,7 @@ import com.mahbub.composetry.ui.theme.ComposeTryTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MyScreenContent()
 //            ComposeTryTheme {

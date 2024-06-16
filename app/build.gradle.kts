@@ -74,4 +74,8 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil-gif:2.5.0")
+
+
+    // KaTeX
+    implementation ("in.hourglass.mathrender:katexmathview:1.0.3")
 }

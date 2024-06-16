@@ -2,7 +2,6 @@ package com.mahbub.composetry.screen
 
 import android.os.Build.VERSION.SDK_INT
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,49 +15,36 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
-import com.mahbub.composetry.R
 
 
 private val emojis = mutableMapOf(
@@ -85,6 +71,7 @@ fun MyScreenContent() {
     val currentState = remember {
         mutableStateOf(0)
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -144,6 +131,26 @@ fun MyScreenContent() {
 }
 
 @Composable
+fun AppToolBar() {
+    TopAppBar(
+        title = { Text(text = "Compose Try") },
+        actions = {
+            IconButton(onClick = { /* doSomething() */ }) {
+                Icon(Icons.Default.Close, contentDescription = null)
+            }
+        },
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
+        elevation = 0.dp,
+        navigationIcon = {
+            IconButton(onClick = { /* doSomething() */ }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = null)
+            }
+        }
+    )
+}
+
+@Composable
 fun TopBar() {
     Row(
         modifier = Modifier
@@ -186,7 +193,7 @@ fun TopBar() {
 fun RatingRow(onClick: (Int) -> Unit) {
 
     val filledStars = remember {
-       mutableStateOf(-1)
+        mutableStateOf(-1)
     }
 
     Row(
@@ -197,7 +204,7 @@ fun RatingRow(onClick: (Int) -> Unit) {
     ) {
         repeat(5) { index ->
             Icon(
-                imageVector =  Icons.Default.Star,
+                imageVector = Icons.Default.Star,
                 contentDescription = null,
                 modifier = Modifier
                     .size(32.dp)
@@ -281,5 +288,11 @@ fun ItemCard(item: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyScreenContent() {
-    MyScreenContent()
+    //MyScreenContent()
+}
+
+@Preview()
+@Composable
+fun PreviewAppToolBar() {
+    AppToolBar()
 }
